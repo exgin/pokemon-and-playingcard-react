@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import PlayingCard from './PlayingCard';
 import './PlayingCardList.css';
 import useAxios from './hooks/useAxios';
+import axios from 'axios';
+import { v4 as uuid } from 'uuid';
 
 /* Renders a list of playing cards.
  * Can also add a new card at random. */
 function CardTable() {
-  const [cards, addCard] = useAxios([]);
-  // const addCard = async () => {
-  //   const response = await axios.get('https://deckofcardsapi.com/api/deck/new/draw/');
-  //   setCards((cards) => [...cards, { ...response.data, id: uuid() }]);
-  // };
+  const [cards, setCards] = useState([]);
+
+  const addCard = async () => {
+    const response = await axios.get('https://deckofcardsapi.com/api/deck/new/draw/');
+    setCards((cards) => [...cards, { ...response.data, id: uuid() }]);
+  };
+
+  // maybe set the api url to use effect, similar to the playcard exercise, since cards.map is being undefined
 
   return (
     <div className='PlayingCardList'>
